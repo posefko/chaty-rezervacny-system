@@ -1,11 +1,53 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* ===== VLASTNÉ CSS PRAVIDLÁ – TÉMY ===== */
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+body.theme-light {
+    background-color: #f8fafc;      /* svetlé pozadie */
+    color: #0f172a;                 /* tmavý text */
+}
+
+body.theme-dark {
+    background-color: #020617;      /* veľmi tmavé pozadie */
+    color: #e5e7eb;                 /* svetlý text */
+}
+
+/* header a footer v tmavej téme */
+body.theme-dark header,
+body.theme-dark footer {
+    background-color: #020617;
+    border-color: #1e293b;
+}
+
+/* odkazy v tmavej téme */
+body.theme-dark a {
+    color: #e5e7eb;
+}
+
+body.theme-dark a:hover {
+    color: #a5b4fc;
+}
+
+/* tlačidlá v tmavej téme – mierne stmavené */
+body.theme-dark .btn-primary {
+    background-color: #16a34a;
+    color: #f9fafb;
+}
+
+body.theme-dark .btn-primary:hover {
+    background-color: #15803d;
+}
+
+/* pomocné triedy pre tlačidlá (môžeš ich začať používať vo view) */
+.btn-primary {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* napr. obal hlavného obsahu – lebo máme Tailwind + vlastné CSS pokope */
+.main-wrapper {
+    max-width: 72rem;
+    margin-inline: auto;
 }
