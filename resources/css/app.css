@@ -1,49 +1,133 @@
 @import "tailwindcss";
 
+body {
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+
 /* ===== VLASTNÉ CSS PRAVIDLÁ – TÉMY ===== */
 
 body.theme-light {
-    background-color: #f8fafc;      /* svetlé pozadie */
-    color: #0f172a;                 /* tmavý text */
+    background-color: #f1f5f9;  /* jemná svetlá sivá */
+    color: #0f172a;             /* tmavý, ale nie úplne čierny text */
 }
+
+/* header/footer v svetlej téme */
+body.theme-light header,
+body.theme-light footer {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: #e2e8f0;
+}
+
+/* odkazy v svetlej téme */
+body.theme-light a:not(.btn-primary):not(.btn-outline):hover {
+    color: #059669;
+}
+
+/* ===== DARK ===== */
 
 body.theme-dark {
-    background-color: #020617;      /* veľmi tmavé pozadie */
-    color: #e5e7eb;                 /* svetlý text */
+    background-color: #0b1220; /* mäkké tmavomodré/uhlové pozadie */
+    color: #cbd5e1;            /* jemne svetlosivý text */
 }
 
-/* header a footer v tmavej téme */
+/* header/footer v tmavej téme */
 body.theme-dark header,
 body.theme-dark footer {
-    background-color: #020617;
-    border-color: #1e293b;
+    background-color: rgba(15, 23, 42, 0.9);
+    border-color: #243044;
 }
 
 /* odkazy v tmavej téme */
 body.theme-dark a {
-    color: #e5e7eb;
+    color: #cbd5e1;
+}
+body.theme-dark a:not(.btn-primary):not(.btn-outline):hover {
+    color: #a7f3d0;
 }
 
-body.theme-dark a:hover {
-    color: #a5b4fc;
-}
+/* ===== TLAČIDLÁ ===== */
 
-/* tlačidlá v tmavej téme – mierne stmavené */
-body.theme-dark .btn-primary {
-    background-color: #16a34a;
-    color: #f9fafb;
-}
-
-body.theme-dark .btn-primary:hover {
-    background-color: #15803d;
-}
-
-/* pomocné triedy pre tlačidlá (môžeš ich začať používať vo view) */
 .btn-primary {
     padding: 0.5rem 1.25rem;
     border-radius: 9999px;
     font-weight: 500;
     display: inline-block;
+}
+
+/* ===== TABUĽKY (najmä zoznam chát) ===== */
+
+/* Light table */
+body.theme-light table {
+    background-color: #ffffff;
+    color: #0f172a;
+}
+body.theme-light thead {
+    background-color: #f8fafc;
+}
+body.theme-light tbody tr {
+    border-color: #e2e8f0;
+}
+body.theme-light tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Dark table */
+body.theme-dark table {
+    background-color: #0f172a;
+    color: #cbd5e1;
+}
+body.theme-dark thead {
+    background-color: #111b2e;
+}
+body.theme-dark tbody tr {
+    border-color: #243044;
+}
+body.theme-dark tbody tr:hover {
+    background-color: #111b2e;
+}
+
+/* ===== TLAČIDLÁ – SEMANTICKÉ TRIEDY ===== */
+
+.btn-primary {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    display: inline-block;
+    background-color: #10b981; /* emerald-500 */
+    color: #ffffff;
+}
+.btn-primary:hover {
+    background-color: #059669; /* emerald-600 */
+    color: #ffffff; /* fix čitateľnosti */
+}
+
+.btn-outline {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    display: inline-block;
+    border: 1px solid #94a3b8; /* slate-400 */
+    background: transparent;
+}
+
+/* Light outline */
+body.theme-light .btn-outline {
+    color: #0f172a;
+}
+body.theme-light .btn-outline:hover {
+    background-color: #e2e8f0; /* slate-200 */
+    color: #0f172a;
+}
+
+/* Dark outline */
+body.theme-dark .btn-outline {
+    border-color: #334155; /* slate-700 */
+    color: #cbd5e1;
+}
+body.theme-dark .btn-outline:hover {
+    background-color: #111b2e;
+    color: #e2e8f0;
 }
 
 /* napr. obal hlavného obsahu – lebo máme Tailwind + vlastné CSS pokope */

@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <div class="overflow-x-auto rounded border border-slate-200 bg-white">
+    <div class="overflow-x-auto rounded border border-slate-200/70 bg-white">
         <table class="min-w-full text-sm">
             <thead class="bg-slate-50">
             <tr>
