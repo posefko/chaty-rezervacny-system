@@ -13,6 +13,7 @@ class Cottage extends Model
         'price_per_night',
         'is_whole_chalet',
         'description',
+        'image_path',
     ];
 }
 

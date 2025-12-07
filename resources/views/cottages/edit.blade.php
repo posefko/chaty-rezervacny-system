@@ -21,6 +21,7 @@
     <form id="cottage-form"
           action="{{ route('cottages.update', $cottage) }}"
           method="POST"
+          enctype="multipart/form-data"
           class="space-y-4 max-w-lg">
         @csrf
         @method('PUT')
@@ -77,6 +78,30 @@
         </div>
 
         <div>
+            <label class="block text-sm font-medium mb-1" for="image">Hlavná fotografia chaty</label>
+            <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                class="w-full rounded border border-slate-300 px-3 py-2 text-sm bg-white"
+            >
+            <p class="text-xs text-red-600 mt-1" data-error-for="image"></p>
+
+            @if(!empty($cottage->image_path))
+                <div class="mt-2">
+                    <p class="text-xs text-slate-500 mb-1">Aktuálna fotka:</p>
+                    <img
+                        src="{{ asset('storage/' . $cottage->image_path) }}"
+                        alt="Fotografia chaty"
+                        class="h-20 w-32 object-cover rounded border border-slate-200"
+                    >
+                </div>
+            @endif
+        </div>
+
+
+        <div>
             <label class="block text-sm font-medium mb-1" for="description">Popis</label>
             <textarea id="description" name="description" rows="4"
                       class="w-full rounded border border-slate-300 px-3 py-2 text-sm">{{ old('description', $cottage->description) }}</textarea>
@@ -100,7 +125,7 @@
             };
 
             const clearErrors = () => {
-                ['name','location','capacity','price_per_night','is_whole_chalet','description']
+                ['name','location','capacity','price_per_night','is_whole_chalet','description','image']
                     .forEach(f => showError(f, ''));
             };
 

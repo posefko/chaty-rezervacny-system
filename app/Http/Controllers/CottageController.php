@@ -21,7 +21,16 @@ class CottageController extends Controller
             'price_per_night' => ['required', 'integer', 'min:1', 'max:10000'],
             'is_whole_chalet' => ['required', 'boolean'],
             'description'     => ['nullable', 'string', 'max:2000'],
+
+            // obrázok je voliteľný
+            'image'           => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
+
+        // ak prišiel obrázok, uložíme ho
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('cottages', 'public');
+            $validated['image_path'] = $path;
+        }
 
         Cottage::create($validated);
 
@@ -29,6 +38,7 @@ class CottageController extends Controller
             ->back()
             ->with('success', 'Chata bola úspešne pridaná.');
     }
+
 
     public function index()
     {
@@ -50,7 +60,15 @@ class CottageController extends Controller
             'price_per_night' => ['required', 'integer', 'min:1', 'max:10000'],
             'is_whole_chalet' => ['required', 'boolean'],
             'description'     => ['nullable', 'string', 'max:2000'],
+
+            // voliteľný nový obrázok
+            'image'           => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('cottages', 'public');
+            $validated['image_path'] = $path;
+        }
 
         $cottage->update($validated);
 
@@ -58,6 +76,7 @@ class CottageController extends Controller
             ->route('cottages.index')
             ->with('success', 'Chata bola úspešne upravená.');
     }
+
 
     public function destroy(Cottage $cottage)
     {

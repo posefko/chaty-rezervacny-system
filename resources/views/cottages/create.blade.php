@@ -27,7 +27,12 @@
         </div>
     @endif
 
-    <form id="cottage-form" action="{{ route('cottages.store') }}" method="POST" class="space-y-4 max-w-lg">
+    <form id="cottage-form"
+          action="{{ route('cottages.store') }}"
+          method="POST"
+          enctype="multipart/form-data"
+          class="space-y-4 max-w-lg">
+
         @csrf
 
         <div>
@@ -95,6 +100,18 @@
         </div>
 
         <div>
+            <label class="block text-sm font-medium mb-1" for="image">Hlavná fotografia chaty</label>
+            <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                class="w-full rounded border border-slate-300 px-3 py-2 text-sm bg-white"
+            >
+            <p class="text-xs text-red-600 mt-1" data-error-for="image"></p>
+        </div>
+
+        <div>
             <label class="block text-sm font-medium mb-1" for="description">Popis</label>
             <textarea
                 id="description"
@@ -124,7 +141,7 @@
             };
 
             const clearErrors = () => {
-                ['name','location','capacity','price_per_night','is_whole_chalet','description']
+                ['name','location','capacity','price_per_night','is_whole_chalet','description','image']
                     .forEach(f => showError(f, ''));
             };
 
@@ -170,6 +187,22 @@
                     showError('description', 'Popis môže mať max 2000 znakov.');
                     valid = false;
                 }
+
+                const imageInput = form.image;
+
+                if (imageInput && imageInput.files && imageInput.files[0]) {
+                    const file = imageInput.files[0];
+                    const maxSize = 2 * 1024 * 1024; // 2MB
+
+                    if (!file.type.startsWith('image/')) {
+                        showError('image', 'Súbor musí byť obrázok.');
+                        valid = false;
+                    } else if (file.size > maxSize) {
+                        showError('image', 'Obrázok môže mať max 2 MB.');
+                        valid = false;
+                    }
+                }
+
 
                 if (!valid) {
                     e.preventDefault();

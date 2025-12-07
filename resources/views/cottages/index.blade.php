@@ -22,6 +22,7 @@
         <table class="min-w-full text-sm">
             <thead class="bg-slate-50">
             <tr>
+                <th class="text-left px-4 py-3">Foto</th>
                 <th class="text-left px-4 py-3">Názov</th>
                 <th class="text-left px-4 py-3">Lokalita</th>
                 <th class="text-left px-4 py-3">Kapacita</th>
@@ -33,6 +34,19 @@
             <tbody>
             @forelse($cottages as $c)
                 <tr class="border-t">
+                    <td class="px-4 py-3">
+                        @if($c->image_path)
+                            <img
+                                src="{{ asset('storage/' . $c->image_path) }}"
+                                alt="Fotografia chaty"
+                                class="h-12 w-16 object-cover rounded border border-slate-200"
+                            >
+                        @else
+                            <div class="h-12 w-16 rounded border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400">
+                                bez fotky
+                            </div>
+                        @endif
+                    </td>
                     <td class="px-4 py-3 font-medium">{{ $c->name }}</td>
                     <td class="px-4 py-3">{{ $c->location }}</td>
                     <td class="px-4 py-3">{{ $c->capacity }}</td>
