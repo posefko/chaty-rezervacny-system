@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>@yield('title', 'Rezervačný systém pre horské chaty')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,9 +19,9 @@
         {{-- LOGO --}}
         <a href="{{ url('/') }}" class="flex items-center gap-2">
             <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500 text-white font-bold">
-                CH
+                CC
             </span>
-            <span class="font-semibold text-lg">Horské chaty</span>
+            <span class="font-semibold text-lg">CabinConnect</span>
         </a>
 
         {{-- DESKTOP MENU --}}

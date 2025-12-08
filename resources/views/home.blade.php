@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Domov – Horské chaty')
+@section('title', 'CabinConnect')
 
 @section('content')
     <div class="grid gap-8 md:grid-cols-2 items-center">
         <div>
-            <p class="text-xs uppercase tracking-wide text-emerald-600 font-semibold mb-2">
+            <p class="text-sm uppercase md:text-base tracking-wide text-emerald-600 font-semibold mb-2">
                 CabinConnect
             </p>
             <h1 class="text-3xl md:text-4xl font-bold mb-4">
@@ -26,7 +26,7 @@
 
         <div class="hidden md:block">
             <div class="rounded-2xl border border-dashed border-emerald-400/70 p-6 text-sm text-slate-600 dark:text-slate-200">
-                Tu môže byť neskôr mapa horských oblastí, náhodne vybrané chaty alebo prehľad najlepšie hodnotených pobytov.
+                Neskôr prehľad najlepšie hodnotených pobytov
             </div>
         </div>
     </div>
