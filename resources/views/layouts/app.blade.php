@@ -28,7 +28,7 @@
         <nav class="hidden md:flex items-center gap-4 text-sm">
             <a href="{{ url('/') }}" class="hover:text-emerald-600">Domov</a>
             <a href="{{ url('/chaty') }}" class="hover:text-emerald-600">Chaty</a>
-            <a href="{{ url('/moje-rezervacie') }}" class="hover:text-emerald-600">Moje rezervácie</a>
+            <a href="{{ url('/rezervacie') }}" class="hover:text-emerald-600">Moje rezervácie</a>
             <a href="{{ url('/o-nas') }}" class="hover:text-emerald-600">O nás</a>
             <a href="{{ url('/kontakt') }}" class="hover:text-emerald-600">Kontakt</a>
         </nav>
@@ -73,7 +73,7 @@
         <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2 text-sm">
             <a href="{{ url('/') }}" class="py-1 hover:text-emerald-600">Domov</a>
             <a href="{{ url('/chaty') }}" class="py-1 hover:text-emerald-600">Chaty</a>
-            <a href="{{ url('/moje-rezervacie') }}" class="py-1 hover:text-emerald-600">Moje rezervácie</a>
+            <a href="{{ url('/rezervacie') }}" class="py-1 hover:text-emerald-600">Moje rezervácie</a>
             <a href="{{ url('/o-nas') }}" class="py-1 hover:text-emerald-600">O nás</a>
             <a href="{{ url('/kontakt') }}" class="py-1 hover:text-emerald-600">Kontakt</a>
 
