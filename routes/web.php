@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CottageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function () {
     return view('home');
@@ -45,6 +46,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/rezervacie/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
 
     Route::delete('/rezervacie/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+
+    Route::get('/chaty/{cottage}', [CottageController::class, 'show'])->name('cottages.show');
+
+    Route::post('/chaty/{cottage}/hodnotenia', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::delete('/hodnotenia/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
 /*

@@ -54,7 +54,10 @@
                             </div>
                         @endif
                     </td>
-                    <td class="px-4 py-3 font-medium">{{ $c->name }}</td>
+                    <td class="px-4 py-3 font-medium"><a href="{{ route('cottages.show', $c) }}" class="hover:text-emerald-600 font-semibold">
+                            {{ $c->name }}
+                        </a>
+                    </td>
                     <td class="px-4 py-3">{{ $c->location }}</td>
                     <td class="px-4 py-3">{{ $c->capacity }}</td>
                     <td class="px-4 py-3">{{ $c->price_per_night }} €</td>

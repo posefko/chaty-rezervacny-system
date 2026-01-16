@@ -87,6 +87,10 @@ class CottageController extends Controller
             ->with('success', 'Chata bola odstránená.');
     }
 
-
+    public function show(Cottage $cottage)
+    {
+        $cottage->load(['reviews.user']);
+        return view('cottages.show', compact('cottage'));
+    }
 }
 
