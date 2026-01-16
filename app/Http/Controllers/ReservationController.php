@@ -10,7 +10,8 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $reservations = Reservation::with(['cottage', 'user'])
+        $reservations = Reservation::with('cottage')
+            ->where('user_id', auth()->id())
             ->orderByDesc('created_at')
             ->paginate(10);
 
@@ -33,8 +34,7 @@ class ReservationController extends Controller
             'note' => ['nullable','string','max:1000'],
         ]);
 
-        // DOČASNE: kým nemáme auth
-        $validated['user_id'] = 1;
+        $validated['user_id'] = auth()->id();
         $validated['status'] = 'pending';
 
         Reservation::create($validated);
@@ -45,12 +45,18 @@ class ReservationController extends Controller
 
     public function edit(Reservation $reservation)
     {
+        if ($reservation->user_id !== auth()->id() && !auth()->user()->is_admin) {
+            abort(403);
+        }
         $cottages = Cottage::orderBy('name')->get();
         return view('reservations.edit', compact('reservation', 'cottages'));
     }
 
     public function update(Request $request, Reservation $reservation)
     {
+        if ($reservation->user_id !== auth()->id() && !auth()->user()->is_admin) {
+            abort(403);
+        }
         $validated = $request->validate([
             'cottage_id' => ['required','exists:cottages,id'],
             'date_from' => ['required','date'],
@@ -68,6 +74,9 @@ class ReservationController extends Controller
 
     public function destroy(Reservation $reservation)
     {
+        if ($reservation->user_id !== auth()->id() && !auth()->user()->is_admin) {
+            abort(403);
+        }
         $reservation->delete();
 
         return redirect()->route('reservations.index')

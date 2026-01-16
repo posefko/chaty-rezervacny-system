@@ -36,13 +36,37 @@
         {{-- RIGHT ACTIONS --}}
         <div class="flex items-center gap-2">
 
-            {{-- auth linky zatiaľ necháme --}}
-            <a href="{{ url('/login') }}" class="hidden sm:inline-block btn-outline text-xs">
-                Prihlásenie
-            </a>
-            <a href="{{ url('/register') }}" class="hidden sm:inline-block btn-primary text-xs">
-                Registrácia
-            </a>
+            {{-- AUTH LINKS --}}
+            @guest
+                <a href="{{ url('/login') }}" class="hidden sm:inline-block btn-outline text-xs">
+                    Prihlásenie
+                </a>
+                <a href="{{ url('/register') }}" class="hidden sm:inline-block btn-primary text-xs">
+                    Registrácia
+                </a>
+            @endguest
+
+            @auth
+                <div class="hidden sm:flex items-center gap-2 text-xs">
+        <span class="text-slate-600">
+            {{ auth()->user()->name }}
+        </span>
+
+                    @if(auth()->user()->is_admin)
+                        <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                ADMIN
+            </span>
+                    @endif
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn-outline text-xs">
+                            Odhlásiť
+                        </button>
+                    </form>
+                </div>
+            @endauth
+
 
             {{-- THEME TOGGLE (tvoj existujúci) --}}
             <button
@@ -77,16 +101,40 @@
             <a href="{{ url('/o-nas') }}" class="py-1 hover:text-emerald-600">O nás</a>
             <a href="{{ url('/kontakt') }}" class="py-1 hover:text-emerald-600">Kontakt</a>
 
-            <div class="pt-2 flex gap-2">
-                <a href="{{ url('/login') }}"
-                   class="text-xs px-3 py-1 rounded border border-emerald-500 text-emerald-600 hover:bg-emerald-50">
-                    Prihlásenie
-                </a>
-                <a href="{{ url('/register') }}"
-                   class="text-xs px-3 py-1 rounded bg-emerald-500 text-white hover:bg-emerald-600">
-                    Registrácia
-                </a>
-            </div>
+            @guest
+                <div class="pt-2 flex gap-2">
+                    <a href="{{ url('/login') }}"
+                       class="text-xs px-3 py-1 rounded border border-emerald-500 text-emerald-600 hover:bg-emerald-50">
+                        Prihlásenie
+                    </a>
+                    <a href="{{ url('/register') }}"
+                       class="text-xs px-3 py-1 rounded bg-emerald-500 text-white hover:bg-emerald-600">
+                        Registrácia
+                    </a>
+                </div>
+            @endguest
+
+            @auth
+                <div class="pt-2 flex items-center justify-between gap-2">
+                    <div class="text-xs">
+                        <span class="text-slate-600">{{ auth()->user()->name }}</span>
+                        @if(auth()->user()->is_admin)
+                            <span class="ml-2 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                    ADMIN
+                </span>
+                        @endif
+                    </div>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit"
+                                class="text-xs px-3 py-1 rounded border border-slate-300 text-slate-700 hover:bg-slate-50">
+                            Odhlásiť
+                        </button>
+                    </form>
+                </div>
+            @endauth
+
         </div>
     </nav>
 </header>
@@ -105,59 +153,6 @@
         © {{ date('Y') }} Rezervačný systém pre horské chaty – CabinConnect.
     </div>
 </footer>
-
-{{-- netriviálny JS – prepínač dark/light --}}
-<script>
-    (function () {
-        const body = document.body;
-        const btn = document.getElementById('theme-toggle');
-        if (!btn) return;
-
-        // Načítaj tému z localStorage
-        const stored = localStorage.getItem('theme');
-        if (stored === 'dark') {
-            body.classList.remove('theme-light');
-            body.classList.add('theme-dark');
-        } else {
-            body.classList.remove('theme-dark');
-            body.classList.add('theme-light');
-        }
-
-        const updateIcon = () => {
-            const isDark = body.classList.contains('theme-dark');
-            btn.textContent = isDark ? '🌙' : '☀️';
-        };
-
-        updateIcon();
-
-        btn.addEventListener('click', () => {
-            const isDark = body.classList.toggle('theme-dark');
-            body.classList.toggle('theme-light', !isDark);
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            updateIcon();
-        });
-
-        // ===== MOBILE MENU TOGGLE =====
-        const toggle = document.getElementById('mobile-menu-toggle');
-        const menu = document.getElementById('mobile-menu');
-
-        if (toggle && menu) {
-            toggle.addEventListener('click', () => {
-                const isHidden = menu.classList.contains('hidden');
-                menu.classList.toggle('hidden', !isHidden);
-                toggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
-            });
-
-            // Voliteľné: zavrie menu po kliknutí na link
-            menu.querySelectorAll('a').forEach(a => {
-                a.addEventListener('click', () => {
-                    menu.classList.add('hidden');
-                    toggle.setAttribute('aria-expanded', 'false');
-                });
-            });
-        }
-    })();
-</script>
 
 </body>
 </html>

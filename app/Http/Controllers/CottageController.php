@@ -35,7 +35,7 @@ class CottageController extends Controller
         Cottage::create($validated);
 
         return redirect()
-            ->back()
+            ->route('cottages.index')
             ->with('success', 'Chata bola úspešne pridaná.');
     }
 
