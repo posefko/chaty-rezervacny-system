@@ -31,6 +31,8 @@
             </div>
         </div>
 
+        <div id="availability-box" class="hidden mt-2 text-sm px-3 py-2 rounded border"></div>
+
         <div>
             <label class="block text-sm font-medium mb-1">Počet hostí</label>
             <input type="number" name="guests" min="1" max="50" class="w-full rounded border px-3 py-2" value="{{ old('guests', 1) }}">

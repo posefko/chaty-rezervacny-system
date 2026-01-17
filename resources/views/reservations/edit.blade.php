@@ -70,18 +70,22 @@
             </div>
 
             {{-- Stav --}}
-            <div>
-                <label class="block text-sm font-medium mb-1">Stav</label>
-                <select name="status" class="w-full rounded border px-3 py-2">
-                    @php $st = old('status', $reservation->status); @endphp
-                    <option value="pending"   @selected($st === 'pending')>pending</option>
-                    <option value="confirmed" @selected($st === 'confirmed')>confirmed</option>
-                    <option value="cancelled" @selected($st === 'cancelled')>cancelled</option>
-                </select>
-                @error('status')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+            @auth
+                @if(auth()->user()->is_admin)
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Stav</label>
+                        <select name="status" class="w-full rounded border px-3 py-2">
+                            @php $st = old('status', $reservation->status); @endphp
+                            <option value="pending"   @selected($st === 'pending')>pending</option>
+                            <option value="confirmed" @selected($st === 'confirmed')>confirmed</option>
+                            <option value="cancelled" @selected($st === 'cancelled')>cancelled</option>
+                        </select>
+                        @error('status')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
+            @endauth
 
             {{-- Poznámka --}}
             <div>

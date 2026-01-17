@@ -73,3 +73,86 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('reset', () => setTimeout(run, 0));
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const cottage = document.querySelector('[name="cottage_id"]');
+    const from = document.querySelector('[name="date_from"]');
+    const to = document.querySelector('[name="date_to"]');
+    const guests = document.querySelector('[name="guests"]');
+    const box = document.getElementById('availability-box');
+
+    if (!cottage || !from || !to || !guests || !box) return;
+
+    let timer = null;
+
+    const setBox = (type, text) => {
+        box.classList.remove(
+            'hidden',
+            'bg-emerald-50','text-emerald-700','border-emerald-200',
+            'bg-red-50','text-red-700','border-red-200',
+            'bg-slate-50','text-slate-700','border-slate-200'
+        );
+
+        if (type === 'ok') box.classList.add('bg-emerald-50','text-emerald-700','border-emerald-200');
+        else if (type === 'bad') box.classList.add('bg-red-50','text-red-700','border-red-200');
+        else box.classList.add('bg-slate-50','text-slate-700','border-slate-200');
+
+        box.textContent = text;
+    };
+
+    const check = async () => {
+        if (!cottage.value || !from.value || !to.value) {
+            box.classList.add('hidden');
+            return;
+        }
+
+        const url = new URL('/rezervacie/check', window.location.origin);
+        url.searchParams.set('cottage_id', cottage.value);
+        url.searchParams.set('date_from', from.value);
+        url.searchParams.set('date_to', to.value);
+        url.searchParams.set('guests', guests.value || '1');
+
+        setBox('info', 'Kontrolujem dostupnosť…');
+
+        const res = await fetch(url.toString(), {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+            }
+        });
+
+        if (!res.ok) {
+            let msg = 'Chyba pri kontrole dostupnosti.';
+            try {
+                const err = await res.json();
+                if (err?.message) msg = err.message;
+            } catch (_) {}
+            setBox('bad', msg);
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.mode === 'whole') {
+            if (data.available) setBox('ok', 'Termín je dostupný ✅ (celá chata)');
+            else setBox('bad', 'Termín nie je dostupný ❌ (celá chata je už rezervovaná)');
+        } else {
+            if (data.available) {
+                setBox('ok', `Dostupné ✅ Voľné lôžka: ${data.remaining}/${data.capacity}`);
+            } else {
+                setBox('bad', `Nedostupné ❌ Voľné lôžka: ${data.remaining}/${data.capacity} (požadované: ${data.requested})`);
+            }
+        }
+    };
+
+    const schedule = () => {
+        clearTimeout(timer);
+        timer = setTimeout(check, 250);
+    };
+
+    cottage.addEventListener('change', schedule);
+    from.addEventListener('change', schedule);
+    to.addEventListener('change', schedule);
+    guests.addEventListener('input', schedule);
+    guests.addEventListener('change', schedule);
+});
+
