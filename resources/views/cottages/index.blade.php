@@ -16,84 +16,43 @@
         @endauth
     </div>
 
-
     @if(session('success'))
         <div class="mb-4 rounded border border-emerald-500 bg-emerald-50 text-emerald-700 px-4 py-2">
             {{ session('success') }}
         </div>
     @endif
 
-    <div class="overflow-x-auto rounded border border-slate-200/70 bg-white">
-        <table class="min-w-full text-sm">
-            <thead class="bg-slate-50">
-            <tr>
-                <th class="text-left px-4 py-3">Foto</th>
-                <th class="text-left px-4 py-3">Názov</th>
-                <th class="text-left px-4 py-3">Lokalita</th>
-                <th class="text-left px-4 py-3">Kapacita</th>
-                <th class="text-left px-4 py-3">Cena / noc</th>
-                <th class="text-left px-4 py-3">Typ</th>
-                @if(auth()->check() && auth()->user()->is_admin)
-                    <th class="text-right px-4 py-3">Akcie</th>
-                @endif
-            </tr>
-            </thead>
-            <tbody>
-            @forelse($cottages as $c)
-                <tr class="border-t">
-                    <td class="px-4 py-3">
-                        @if($c->image_path)
-                            <img
-                                src="{{ asset('storage/' . $c->image_path) }}"
-                                alt="Fotografia chaty"
-                                class="h-12 w-16 object-cover rounded border border-slate-200"
-                            >
-                        @else
-                            <div class="h-12 w-16 rounded border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400">
-                                bez fotky
-                            </div>
-                        @endif
-                    </td>
-                    <td class="px-4 py-3 font-medium"><a href="{{ route('cottages.show', $c) }}" class="hover:text-emerald-600 font-semibold">
-                            {{ $c->name }}
-                        </a>
-                    </td>
-                    <td class="px-4 py-3">{{ $c->location }}</td>
-                    <td class="px-4 py-3">{{ $c->capacity }}</td>
-                    <td class="px-4 py-3">{{ $c->price_per_night }} €</td>
-                    <td class="px-4 py-3">
-                        {{ $c->is_whole_chalet ? 'Celá chata' : 'Len lôžka' }}
-                    </td>
-                    @if(auth()->check() && auth()->user()->is_admin)
-                        <td class="px-4 py-3 text-right">
-                            <a href="{{ route('cottages.edit', $c) }}"
-                               class="inline-block text-xs px-3 py-1 rounded border border-slate-300 hover:bg-slate-100">
-                                Upraviť
-                            </a>
+    {{-- AJAX FILTER FORM --}}
+    <form id="cottage-filters" class="grid sm:grid-cols-3 gap-3 mb-4">
+        <div>
+            <label class="text-xs text-slate-500">Lokalita</label>
+            <input name="location" type="text" placeholder="napr. Tatry"
+                   class="mt-1 w-full border border-slate-200 rounded px-3 py-2 text-sm">
+        </div>
 
-                            <form action="{{ route('cottages.destroy', $c) }}"
-                                  method="POST"
-                                  class="inline-block"
-                                  onsubmit="return confirm('Naozaj chceš odstrániť túto chatu?');">
-                                @csrf
-                                @method('DELETE')
-                                <button
-                                    type="submit"
-                                    class="inline-block text-xs px-3 py-1 rounded border border-red-300 text-red-700 hover:bg-red-50">
-                                    Zmazať
-                                </button>
-                            </form>
-                        </td>
-                    @endif
-                </tr>
-            @empty
-                <tr>
-                    <td class="px-4 py-6 text-slate-500" colspan="5">
-                        Zatiaľ nie sú pridané žiadne chaty.
-                    </td>
-                </tr>
-            @endforelse
-            </tbody>
-        </table>
+        <div>
+            <label class="text-xs text-slate-500">Min. kapacita</label>
+            <input name="min_capacity" type="number" min="1" placeholder="napr. 4"
+                   class="mt-1 w-full border border-slate-200 rounded px-3 py-2 text-sm">
+        </div>
+
+        <div>
+            <label class="text-xs text-slate-500">Max. cena / noc</label>
+            <input name="max_price" type="number" min="0" step="0.01" placeholder="napr. 90"
+                   class="mt-1 w-full border border-slate-200 rounded px-3 py-2 text-sm">
+        </div>
+
+        <div class="sm:col-span-3 flex items-center justify-between">
+            <p class="text-xs text-slate-500">Filtrovanie prebieha automaticky bez reloadu (AJAX).</p>
+            <button type="reset"
+                    class="inline-block text-xs px-3 py-1 rounded border border-slate-300 hover:bg-slate-100">
+                Reset
+            </button>
+        </div>
+    </form>
+
+    {{-- sem sa bude AJAX-om prepisovať obsah --}}
+    <div id="cottages-list">
+        @include('cottages.partials.list', ['cottages' => $cottages])
     </div>
 @endsection

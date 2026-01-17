@@ -50,3 +50,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('cottage-filters');
+    const target = document.getElementById('cottages-list');
+
+    if (!form || !target) return;
+
+    const run = async () => {
+        const params = new URLSearchParams(new FormData(form));
+        const res = await fetch(`/chaty/filter?${params.toString()}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+
+        if (!res.ok) return;
+
+        target.innerHTML = await res.text();
+    };
+
+    form.addEventListener('input', run);
+    form.addEventListener('change', run);
+    form.addEventListener('reset', () => setTimeout(run, 0));
+});
+

@@ -92,5 +92,28 @@ class CottageController extends Controller
         $cottage->load(['reviews.user']);
         return view('cottages.show', compact('cottage'));
     }
+
+    public function filter(Request $request)
+    {
+        $query = Cottage::query();
+
+        if ($request->filled('location')) {
+            $query->where('location', 'like', '%' . $request->location . '%');
+        }
+
+        if ($request->filled('min_capacity')) {
+            $query->where('capacity', '>=', (int)$request->min_capacity);
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('price_per_night', '<=', (float)$request->max_price);
+        }
+
+        $cottages = $query->orderBy('name')->get();
+
+        // vráti iba HTML časti zoznamu
+        return view('cottages.partials.list', compact('cottages'));
+    }
+
 }
 
