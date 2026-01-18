@@ -24,6 +24,8 @@
             </div>
         </div>
 
+
+        {{-- vytvorene s pomocou AI--}}
         <div class="top-rated-box rounded-xl border p-5 theme-light:bg-white theme-dark:bg-slate-900 theme-light:border-slate-200 theme-dark:border-slate-700">
             <h2 class="text-lg font-semibold mb-4 theme-light:text-slate-900 theme-dark:text-slate-100">
                 Najlepšie hodnotené

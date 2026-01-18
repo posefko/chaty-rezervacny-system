@@ -1,5 +1,6 @@
 import './bootstrap';
 
+// vytvorene s pomocou generativnej AI
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
