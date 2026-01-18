@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CottageController;
 use App\Http\Controllers\ReservationController;
@@ -15,6 +16,8 @@ Route::get('/', function () {
 | Public: Chaty (len prehliadanie)
 |--------------------------------------------------------------------------
 */
+Route::get('/o-nas', [PageController::class, 'about'])->name('about');
+Route::get('/kontakt', [PageController::class, 'contact'])->name('contact');
 Route::get('/chaty', [CottageController::class, 'index'])->name('cottages.index');
 
 // Make cottage detail public so specific URIs like /chaty/vytvorit aren't captured by the

@@ -98,10 +98,9 @@
             <a href="{{ url('/') }}" class="py-1 hover:text-emerald-600">Domov</a>
             <a href="{{ url('/chaty') }}" class="py-1 hover:text-emerald-600">Chaty</a>
             <a href="{{ url('/rezervacie') }}" class="py-1 hover:text-emerald-600">Moje rezervácie</a>
-            <a href="{{ url('/o-nas') }}" class="py-1 hover:text-emerald-600">O nás</a>
-            <a href="{{ url('/kontakt') }}" class="py-1 hover:text-emerald-600">Kontakt</a>
-
-            @guest
+            <a href="{{ route('about') }}" class="nav-link">O nás</a>
+            <a href="{{ route('contact') }}" class="nav-link">Kontakt</a>
+        @guest
                 <div class="pt-2 flex gap-2">
                     <a href="{{ url('/login') }}"
                        class="text-xs px-3 py-1 rounded border border-emerald-500 text-emerald-600 hover:bg-emerald-50">
