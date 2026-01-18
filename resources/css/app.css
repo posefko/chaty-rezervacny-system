@@ -135,3 +135,47 @@ body.theme-dark .btn-outline:hover {
     max-width: 72rem;
     margin-inline: auto;
 }
+
+body.theme-light .hero-subtitle {
+    color: #334155;
+}
+
+body.theme-dark .hero-subtitle {
+    color: #e2e8f0;
+}
+
+/* Top rated box – light/dark */
+body.theme-light .top-rated-box {
+    color: #475569;            /* slate-600 */
+    background: transparent;
+}
+
+body.theme-dark .top-rated-box {
+    color: #e2e8f0;            /* slate-200 */
+    background-color: rgba(15, 23, 42, 0.6); /* jemné tmavé pozadie */
+    border-color: rgba(110, 231, 183, 0.45); /* emerald-ish, menej ostré */
+}
+
+/* Utility-like theme classes for body.theme-light / body.theme-dark */
+body.theme-light .theme-light\:bg-white { background-color: #ffffff; }
+body.theme-dark  .theme-dark\:bg-slate-900 { background-color: #0f172a; }
+
+body.theme-light .theme-light\:border-slate-200 { border-color: #e2e8f0; }
+body.theme-dark  .theme-dark\:border-slate-700 { border-color: #334155; }
+
+body.theme-light .theme-light\:bg-slate-50 { background-color: #f8fafc; }
+body.theme-dark  .theme-dark\:bg-slate-800 { background-color: #1e293b; }
+
+body.theme-light .theme-light\:hover\:bg-slate-100:hover { background-color: #f1f5f9; }
+body.theme-dark  .theme-dark\:hover\:bg-slate-700:hover { background-color: #334155; }
+
+body.theme-light .theme-light\:text-slate-900 { color: #0f172a; }
+body.theme-dark  .theme-dark\:text-slate-100 { color: #f1f5f9; }
+
+body.theme-light .theme-light\:text-slate-600 { color: #475569; }
+body.theme-dark  .theme-dark\:text-slate-300 { color: #cbd5e1; }
+
+body.theme-light .theme-light\:text-slate-500 { color: #64748b; }
+body.theme-dark  .theme-dark\:text-slate-400 { color: #94a3b8; }
+
+body.theme-dark  .theme-dark\:text-slate-200 { color: #e2e8f0; }

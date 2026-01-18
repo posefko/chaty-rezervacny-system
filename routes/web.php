@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Models\Cottage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CottageController;
 use App\Http\Controllers\ReservationController;
@@ -11,6 +12,18 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/', function () {
+
+    $topCottages = Cottage::query()
+        ->withAvg('reviews', 'rating')
+        ->withCount('reviews')
+        ->orderByDesc('reviews_avg_rating')
+        ->orderByDesc('reviews_count')
+        ->take(3)
+        ->get();
+
+    return view('home', compact('topCottages'));
+});
 /*
 |--------------------------------------------------------------------------
 | Public: Chaty (len prehliadanie)
